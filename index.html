@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Koki Yamanami — Full-Stack &amp; AI Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0e0e0e;
+    --ink-2: #3a3a3a;
+    --ink-3: #888;
+    --paper: #f5f3ee;
+    --paper-2: #ede9e1;
+    --paper-3: #e4dfd5;
+    --accent: #1a3cff;
+    --accent-2: #ff3c1a;
+    --accent-light: #e8ecff;
+    --white: #fff;
+    --radius: 4px;
+    --radius-lg: 12px;
+    --sans: 'Noto Sans JP', sans-serif;
+    --display: 'Syne', sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2.5rem;
+    background: rgba(245,243,238,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--paper-3);
+  }
+  .nav-logo {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--ink);
+    color: var(--paper) !important;
+    padding: 0.45rem 1.1rem;
+    border-radius: var(--radius);
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--accent) !important; color: #fff !important; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--ink); transition: 0.3s; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 8rem 2.5rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 30%, rgba(26,60,255,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(255,60,26,0.06) 0%, transparent 70%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(var(--paper-3) 1px, transparent 1px),
+      linear-gradient(90deg, var(--paper-3) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.5;
+  }
+  .hero-inner {
+    position: relative; z-index: 1;
+    max-width: 1100px; margin: 0 auto; width: 100%;
+  }
+  .hero-eyebrow {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block; width: 32px; height: 2px;
+    background: var(--accent);
+  }
+  .hero-h1 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  .hero-h1 em {
+    font-style: normal;
+    color: var(--accent);
+    display: block;
+  }
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--ink-2);
+    max-width: 560px;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--ink); color: var(--paper);
+    padding: 0.85rem 2rem;
+    font-family: var(--sans); font-size: 0.9rem; font-weight: 700;
+    letter-spacing: 0.04em;
+    border-radius: var(--radius); border: 2px solid var(--ink);
+    text-decoration: none; cursor: pointer;
+    transition: background 0.2s, color 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: transparent; color: var(--ink);
+    padding: 0.85rem 2rem;
+    font-family: var(--sans); font-size: 0.9rem; font-weight: 700;
+    letter-spacing: 0.04em;
+    border-radius: var(--radius); border: 2px solid var(--ink);
+    text-decoration: none; cursor: pointer;
+    transition: background 0.2s, color 0.2s, transform 0.15s;
+  }
+  .btn-outline:hover { background: var(--ink); color: var(--paper); transform: translateY(-2px); }
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 4rem;
+    padding-top: 3rem; border-top: 1px solid var(--paper-3);
+    flex-wrap: wrap;
+  }
+  .stat-num {
+    font-family: var(--display);
+    font-size: 2.8rem; font-weight: 800;
+    color: var(--ink); line-height: 1;
+    letter-spacing: -0.03em;
+  }
+  .stat-num span { color: var(--accent); }
+  .stat-label { font-size: 0.8rem; color: var(--ink-3); margin-top: 0.25rem; }
+
+  /* SECTION COMMON */
+  section { padding: 6rem 2.5rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-eyebrow {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .section-eyebrow::before {
+    content: ''; width: 24px; height: 2px; background: var(--accent);
+  }
+  .section-title {
+    font-family: var(--display);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800; letter-spacing: -0.03em;
+    color: var(--ink); line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ABOUT */
+  #about { background: var(--white); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
+  }
+  .about-visual {
+    position: relative;
+  }
+  .about-card {
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .about-card::before {
+    content: '';
+    position: absolute; top: -40px; right: -40px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.15;
+  }
+  .about-name {
+    font-family: var(--display);
+    font-size: 1.8rem; font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+  .about-role {
+    font-size: 0.85rem; color: rgba(245,243,238,0.6);
+    margin-bottom: 1.5rem;
+  }
+  .about-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+  .about-tag {
+    font-size: 0.75rem; font-weight: 500;
+    padding: 0.3rem 0.75rem;
+    border-radius: 100px;
+    border: 1px solid rgba(245,243,238,0.25);
+    color: rgba(245,243,238,0.8);
+  }
+  .timeline { margin-top: 0; }
+  .tl-item {
+    display: flex; gap: 1.5rem;
+    padding-bottom: 2rem;
+    position: relative;
+  }
+  .tl-item:not(:last-child)::after {
+    content: '';
+    position: absolute; left: 15px; top: 36px; bottom: 0;
+    width: 2px; background: var(--paper-3);
+  }
+  .tl-dot {
+    width: 32px; height: 32px; min-width: 32px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    border: 2px solid var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; font-weight: 700; color: var(--accent);
+    z-index: 1;
+  }
+  .tl-content {}
+  .tl-period { font-size: 0.75rem; color: var(--accent); font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.2rem; }
+  .tl-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.25rem; }
+  .tl-desc { font-size: 0.87rem; color: var(--ink-2); line-height: 1.65; }
+
+  /* STRENGTH */
+  #strength { background: var(--paper); }
+  .strength-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .strength-card {
+    background: var(--white);
+    border: 1px solid var(--paper-3);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    position: relative; overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .strength-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(14,14,14,0.08); }
+  .strength-num {
+    font-family: var(--display);
+    font-size: 3.5rem; font-weight: 800;
+    color: var(--paper-3); line-height: 1;
+    margin-bottom: 1rem;
+    letter-spacing: -0.04em;
+  }
+  .strength-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; }
+  .strength-desc { font-size: 0.85rem; color: var(--ink-2); line-height: 1.7; }
+  .strength-accent {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: var(--accent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .strength-card:hover .strength-accent { transform: scaleX(1); }
+
+  /* TECH */
+  #tech { background: var(--ink); color: var(--paper); }
+  #tech .section-title { color: var(--paper); }
+  #tech .section-eyebrow { color: rgba(245,243,238,0.5); }
+  #tech .section-eyebrow::before { background: rgba(245,243,238,0.3); }
+  .tech-groups { display: flex; flex-direction: column; gap: 2.5rem; margin-top: 3rem; }
+  .tech-group-label {
+    font-size: 0.75rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(245,243,238,0.4);
+    margin-bottom: 1rem;
+  }
+  .tech-pills { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .tech-pill {
+    display: flex; align-items: center; gap: 0.6rem;
+    background: rgba(245,243,238,0.07);
+    border: 1px solid rgba(245,243,238,0.12);
+    border-radius: var(--radius);
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem; font-weight: 500;
+    color: var(--paper);
+    transition: background 0.2s, border-color 0.2s;
+    cursor: default;
+  }
+  .tech-pill:hover { background: rgba(26,60,255,0.25); border-color: var(--accent); }
+  .tech-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+  .tech-pill.secondary .dot { background: var(--accent-2); }
+  .tech-pill.cloud .dot { background: #34c985; }
+
+  /* PROJECTS */
+  #projects { background: var(--paper-2); }
+  .projects-list { display: flex; flex-direction: column; gap: 0; margin-top: 3rem; }
+  .project-item {
+    display: grid; grid-template-columns: 280px 1fr; gap: 3rem;
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--paper-3);
+    align-items: start;
+    transition: background 0.2s;
+  }
+  .project-item:first-child { border-top: 1px solid var(--paper-3); }
+  .project-meta {}
+  .project-num {
+    font-family: var(--display); font-size: 0.8rem; font-weight: 700;
+    color: var(--ink-3); letter-spacing: 0.08em; margin-bottom: 0.75rem;
+  }
+  .project-title {
+    font-family: var(--display); font-size: 1.4rem; font-weight: 800;
+    letter-spacing: -0.02em; color: var(--ink);
+    margin-bottom: 0.5rem; line-height: 1.2;
+  }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
+  .project-tag {
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--accent); background: var(--accent-light);
+    padding: 0.2rem 0.6rem; border-radius: 3px;
+  }
+  .project-body {}
+  .project-desc { font-size: 0.92rem; color: var(--ink-2); margin-bottom: 1.5rem; line-height: 1.75; }
+  .project-phases { display: flex; flex-direction: column; gap: 0.75rem; }
+  .phase {
+    display: flex; align-items: flex-start; gap: 0.75rem;
+    background: var(--white); border-radius: var(--radius);
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--paper-3);
+  }
+  .phase-label {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--white); background: var(--ink);
+    padding: 0.2rem 0.6rem; border-radius: 3px;
+    white-space: nowrap; margin-top: 1px;
+  }
+  .phase-label.phase-ai { background: var(--accent); }
+  .phase-label.phase-result { background: #1a9c5a; }
+  .phase-text { font-size: 0.85rem; color: var(--ink-2); line-height: 1.6; }
+
+  /* PROCESS */
+  #process { background: var(--white); }
+  .process-steps {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0; margin-top: 3rem;
+    border: 1px solid var(--paper-3); border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .process-step {
+    padding: 2rem 1.5rem;
+    border-right: 1px solid var(--paper-3);
+    position: relative;
+    transition: background 0.2s;
+  }
+  .process-step:last-child { border-right: none; }
+  .process-step:hover { background: var(--accent-light); }
+  .process-step-num {
+    font-family: var(--display); font-size: 2.2rem; font-weight: 800;
+    color: var(--paper-3); letter-spacing: -0.04em; margin-bottom: 0.75rem;
+  }
+  .process-step-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.4rem; }
+  .process-step-desc { font-size: 0.8rem; color: var(--ink-2); line-height: 1.65; }
+  .process-arrow {
+    position: absolute; top: 50%; right: -10px;
+    transform: translateY(-50%);
+    width: 20px; height: 20px;
+    background: var(--white); border: 1px solid var(--paper-3);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; color: var(--accent);
+    z-index: 1;
+  }
+  .process-step:last-child .process-arrow { display: none; }
+
+  /* CONTACT */
+  #contact { background: var(--paper); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1.5fr; gap: 5rem; align-items: start;
+  }
+  .contact-info {}
+  .contact-tagline {
+    font-family: var(--display); font-size: 1.8rem; font-weight: 800;
+    letter-spacing: -0.025em; color: var(--ink);
+    line-height: 1.2; margin-bottom: 1.25rem;
+  }
+  .contact-lead { font-size: 0.95rem; color: var(--ink-2); line-height: 1.75; margin-bottom: 2rem; }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-link-item {
+    display: flex; align-items: center; gap: 0.75rem;
+    font-size: 0.9rem; color: var(--ink);
+    text-decoration: none;
+  }
+  .contact-link-item .icon-box {
+    width: 36px; height: 36px;
+    background: var(--paper-2); border-radius: var(--radius);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .contact-form {
+    background: var(--white);
+    border: 1px solid var(--paper-3);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+  }
+  .form-row { margin-bottom: 1.25rem; }
+  .form-row label {
+    display: block; font-size: 0.8rem; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--ink-2); margin-bottom: 0.4rem;
+  }
+  .form-row input,
+  .form-row textarea,
+  .form-row select {
+    width: 100%;
+    background: var(--paper);
+    border: 1.5px solid var(--paper-3);
+    border-radius: var(--radius);
+    padding: 0.75rem 1rem;
+    font-family: var(--sans); font-size: 0.9rem;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+  .form-row input:focus,
+  .form-row textarea:focus,
+  .form-row select:focus { border-color: var(--accent); }
+  .form-row textarea { resize: vertical; min-height: 130px; }
+  .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-submit {
+    width: 100%; padding: 1rem;
+    background: var(--ink); color: var(--paper);
+    border: 2px solid var(--ink); border-radius: var(--radius);
+    font-family: var(--sans); font-size: 0.95rem; font-weight: 700;
+    letter-spacing: 0.04em; cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .form-submit:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
+  .form-note { font-size: 0.75rem; color: var(--ink-3); margin-top: 0.75rem; text-align: center; }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink); color: rgba(245,243,238,0.6);
+    padding: 2rem 2.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo {
+    font-family: var(--display); font-weight: 800;
+    font-size: 1rem; color: var(--paper);
+    text-decoration: none; letter-spacing: -0.02em;
+  }
+  .footer-logo span { color: var(--accent); }
+  footer p { font-size: 0.8rem; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp 0.7s ease forwards; }
+  .fade-up-2 { animation: fadeUp 0.7s 0.15s ease both; }
+  .fade-up-3 { animation: fadeUp 0.7s 0.3s ease both; }
+  .fade-up-4 { animation: fadeUp 0.7s 0.45s ease both; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .nav-links.open {
+      display: flex; flex-direction: column;
+      position: fixed; top: 60px; left: 0; right: 0;
+      background: var(--paper);
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--paper-3);
+      gap: 1rem; z-index: 99;
+    }
+    .hamburger { display: flex; }
+    .hero { padding: 7rem 1.5rem 4rem; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .project-item { grid-template-columns: 1fr; gap: 1.5rem; }
+    .form-row-2 { grid-template-columns: 1fr; }
+    .hero-stats { gap: 2rem; }
+    footer { flex-direction: column; align-items: flex-start; }
+  }
+  @media (max-width: 600px) {
+    .process-steps { grid-template-columns: 1fr; }
+    .process-step { border-right: none; border-bottom: 1px solid var(--paper-3); }
+    .process-step:last-child { border-bottom: none; }
+    .process-arrow { display: none; }
+    .strength-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 400px) {
+    .strength-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Koki<span> Yamanami</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#strength">強み</a></li>
+    <li><a href="#tech">技術</a></li>
+    <li><a href="#projects">実績</a></li>
+    <li><a href="#process">進め方</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+  <div style="display:flex; align-items:center; gap:0.5rem; margin-right:0.5rem;">
+    <button id="langJa" onclick="applyLang('ja')" style="background:none;border:none;cursor:pointer;font-family:var(--sans);font-size:0.82rem;font-weight:700;color:var(--ink);padding:0.2rem 0.4rem;border-radius:3px;">JA</button>
+    <span style="color:var(--ink-3);font-size:0.75rem;">|</span>
+    <button id="langEn" onclick="applyLang('en')" style="background:none;border:none;cursor:pointer;font-family:var(--sans);font-size:0.82rem;font-weight:400;color:var(--ink-2);padding:0.2rem 0.4rem;border-radius:3px;">EN</button>
+  </div>
+  <button class="hamburger" id="hamburger" id="hamburgerBtn" aria-label="メニューを開く">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow fade-up" id="heroEyebrow">Full-Stack Engineer / AI Engineer</div>
+    <div id="heroJaName" style="font-family:'Noto Sans JP',sans-serif; font-size:1rem; color:var(--ink-3); margin-bottom:0.5rem; letter-spacing:0.05em;">山並 康希</div>
+    <h1 class="hero-h1 fade-up-2" id="heroH1">
+      課題を解決する<em>プロダクトを</em><em>一緒に作る。</em>
+    </h1>
+    <p class="hero-sub fade-up-3" id="heroSub">
+      ヒアリングから仮説設計・PoC・MVP開発・AI機能導入・運用まで、
+      一気通貫でサポートするフルスタックエンジニアです。
+      海外オフショア開発（マレーシア・フィリピン・ミャンマー）の経験と5年以上の実務を活かし、事業成長に直結するプロダクトを届けます。
+    </p>
+    <div class="hero-actions fade-up-4">
+      <a href="#projects" class="btn-primary" id="heroBtn1">実績を見る →</a>
+      <a href="#contact" class="btn-outline" id="heroBtn2">お問い合わせ</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num" id="careerYears">5<span>+</span></div>
+        <div class="stat-label" id="statLabel1">年のキャリア</div>
+      </div>
+      <div>
+        <div class="stat-num">7<span>+</span></div>
+        <div class="stat-label" id="statLabel2">プロジェクト実績</div>
+      </div>
+      <div>
+        <div class="stat-num">3</div>
+        <div class="stat-label" id="statLabel3">クラウドプラットフォーム</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual">
+        <div class="about-card">
+          <div style="display:flex; align-items:center; gap:1.25rem; margin-bottom:1.25rem;">
+            <img src="yamanami.jpg" alt="Koki Yamanami" style="width:80px; height:80px; border-radius:50%; object-fit:cover; object-position:center top; border:2px solid rgba(245,243,238,0.25); flex-shrink:0;">
+            <div>
+              <div class="about-name" style="font-size:1.4rem; margin-bottom:0.1rem;">Koki Yamanami</div>
+              <div id="aboutCardJaName" style="font-size:0.85rem; color:rgba(245,243,238,0.6); letter-spacing:0.05em; margin-bottom:0.2rem;">山並 康希</div>
+              <div class="about-role" style="margin-bottom:0;">Full-Stack Engineer / AI Engineer</div>
+            </div>
+          </div>
+          <p id="aboutCardDesc" style="font-size:0.87rem; color:rgba(245,243,238,0.75); line-height:1.75;">
+            留学・IT学習で土台を築き、マレーシア・フィリピン・ミャンマーの
+            海外チームとのオフショア開発を経て、
+            プログラマーとして幅広いドメインのプロダクト開発を経験。
+          </p>
+          <div class="about-tags">
+            <span class="about-tag">Python / Django</span>
+            <span class="about-tag">React / TypeScript</span>
+            <span class="about-tag">AWS / GCP / Azure</span>
+            <span class="about-tag">AI Integration</span>
+            <span class="about-tag">Product Design</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="section-eyebrow" id="aboutEyebrow">About</div>
+        <h2 class="section-title" id="aboutTitle">経歴とバックグラウンド</h2>
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-dot">1</div>
+            <div class="tl-content">
+              <div class="tl-period" id="tl1Period">〜2021年</div>
+              <div class="tl-title" id="tl1Title">大学 &amp; 海外留学</div>
+              <div class="tl-desc" id="tl1Desc">
+                海外留学で語学・異文化コミュニケーション力を習得。
+                大学ではコンピュータサイエンスを専攻し、ソフトウェア開発の基礎を体系的に学習。
+              </div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot">2</div>
+            <div class="tl-content">
+              <div class="tl-period" id="tl2Period">2021年 〜 現在</div>
+              <div class="tl-title" id="tl2Title">オフショア開発 &amp; プログラマーとしてのキャリア</div>
+              <div class="tl-desc" id="tl2Desc">
+                新卒入社後、マレーシア・フィリピン・ミャンマーの海外エンジニアチームと日本からリモートで協働するオフショア開発に1年半従事。その後はSaaS・業務システム・AIプロダクトなど多様なドメインで開発リードを担当し、要件定義からリリース・運用改善まで一貫して手がけてきた。
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STRENGTH -->
+<section id="strength">
+  <div class="container">
+    <div class="section-eyebrow" id="strengthEyebrow">Strength</div>
+    <h2 class="section-title" id="strengthTitle">一気通貫で<br>プロダクトを支える</h2>
+    <p style="max-width:560px; color:var(--ink-2); font-size:0.95rem; line-height:1.8;" id="strengthLead">
+      「何を作るべきか」という課題の整理から、
+      実際にリリースして運用を回すところまで、
+      すべてのフェーズで価値を提供できることが最大の強みです。
+    </p>
+    <div class="strength-grid">
+      <div class="strength-card">
+        <div class="strength-num">01</div>
+        <div class="strength-title" id="strength1Title">課題ヒアリング &amp; 仮説設計</div>
+        <div class="strength-desc" id="strength1Desc">ユーザーの声を深掘りし、解くべき問題を正確に特定。仮説を設計してチームと共有します。</div>
+        <div class="strength-accent"></div>
+      </div>
+      <div class="strength-card">
+        <div class="strength-num">02</div>
+        <div class="strength-title" id="strength2Title">PoC &amp; MVP開発</div>
+        <div class="strength-desc" id="strength2Desc">最小コストで仮説を検証するPoC設計と、スピーディなMVP開発でリスクを最小化。</div>
+        <div class="strength-accent"></div>
+      </div>
+      <div class="strength-card">
+        <div class="strength-num">03</div>
+        <div class="strength-title" id="strength3Title">AI機能の導入</div>
+        <div class="strength-desc" id="strength3Desc">LLM・チャットボット・自動化など、最新のAI技術を既存プロダクトへ効果的に統合します。</div>
+        <div class="strength-accent"></div>
+      </div>
+      <div class="strength-card">
+        <div class="strength-num">04</div>
+        <div class="strength-title" id="strength4Title">リリース後の運用改善</div>
+        <div class="strength-desc" id="strength4Desc">KPI計測・ユーザーフィードバック収集・継続的な機能改善まで、長期的な成長を支援します。</div>
+        <div class="strength-accent"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH -->
+<section id="tech">
+  <div class="container">
+    <div class="section-eyebrow" id="techEyebrow">Tech Stack</div>
+    <h2 class="section-title" id="techTitle">技術スタック</h2>
+    <div class="tech-groups">
+      <div>
+        <div class="tech-group-label">Backend</div>
+        <div class="tech-pills">
+          <div class="tech-pill"><span class="dot"></span>Python</div>
+          <div class="tech-pill"><span class="dot"></span>Django</div>
+          <div class="tech-pill"><span class="dot"></span>Django REST Framework</div>
+          <div class="tech-pill"><span class="dot"></span>FastAPI</div>
+          <div class="tech-pill"><span class="dot"></span>PostgreSQL</div>
+        </div>
+      </div>
+      <div>
+        <div class="tech-group-label">Frontend</div>
+        <div class="tech-pills">
+          <div class="tech-pill secondary"><span class="dot"></span>React</div>
+          <div class="tech-pill secondary"><span class="dot"></span>TypeScript</div>
+          <div class="tech-pill secondary"><span class="dot"></span>Tailwind CSS</div>
+        </div>
+      </div>
+      <div>
+        <div class="tech-group-label">Cloud &amp; Infrastructure</div>
+        <div class="tech-pills">
+          <div class="tech-pill cloud"><span class="dot"></span>AWS</div>
+          <div class="tech-pill cloud"><span class="dot"></span>GCP</div>
+          <div class="tech-pill cloud"><span class="dot"></span>Azure</div>
+          <div class="tech-pill cloud"><span class="dot"></span>Docker</div>
+          <div class="tech-pill cloud"><span class="dot"></span>GitHub Actions</div>
+        </div>
+      </div>
+      <div>
+        <div class="tech-group-label">AI &amp; Tools</div>
+        <div class="tech-pills">
+          <div class="tech-pill"><span class="dot"></span>OpenAI API</div>
+          <div class="tech-pill"><span class="dot"></span>LangChain</div>
+          <div class="tech-pill"><span class="dot"></span>Stripe</div>
+          <div class="tech-pill"><span class="dot"></span>Figma</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-eyebrow" id="projectsEyebrow">Projects</div>
+    <h2 class="section-title" id="projectsTitle">プロジェクト実績</h2>
+
+    <div class="projects-list">
+
+      <div class="project-item">
+        <div class="project-meta">
+          <div class="project-num">2025.12 — 2026.03</div>
+          <div class="project-title" id="proj1Title">営業支援ツール開発</div>
+          <div class="project-tags">
+            <span class="project-tag">Python</span>
+            <span class="project-tag">TypeScript</span>
+            <span class="project-tag">FastAPI</span>
+            <span class="project-tag">React</span>
+            <span class="project-tag">AWS</span>
+          </div>
+        </div>
+        <div class="project-body">
+          <p class="project-desc" id="proj1Desc">API設計・開発、個社カスタム開発、バッチ処理開発を担当。Claude Codeを活用したAI駆動開発・アジャイル体制で推進。（PG / 約8名）</p>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <div class="project-meta">
+          <div class="project-num">2025.11 — 2026.03</div>
+          <div class="project-title" id="proj2Title">チャットボットシステム開発</div>
+          <div class="project-tags">
+            <span class="project-tag">Python</span>
+            <span class="project-tag">TypeScript</span>
+            <span class="project-tag">Azure OpenAI</span>
+            <span class="project-tag">RAG</span>
+            <span class="project-tag">Django</span>
+          </div>
+        </div>
+        <div class="project-body">
+          <p class="project-desc" id="proj2Desc">アーキテクチャ設計・RAG開発・オフショア体制構築・タスク進捗管理・レビューをブリッジSEとして担当。Azure AI Search / Blob Storage活用。（ブリッジSE / 約7名）</p>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <div class="project-meta">
+          <div class="project-num">2024.12 — 2025.12</div>
+          <div class="project-title" id="proj3Title">シェアオフィスWebサービス開発</div>
+          <div class="project-tags">
+            <span class="project-tag">Python</span>
+            <span class="project-tag">PHP / Laravel</span>
+            <span class="project-tag">Django</span>
+            <span class="project-tag">MySQL</span>
+            <span class="project-tag">Linux</span>
+          </div>
+        </div>
+        <div class="project-body">
+          <p class="project-desc" id="proj3Desc">API設計・開発、コンポーネント設計、既存システムリプレイス、バッチ処理開発を担当。デザインパターンを考慮した堅牢な設計を実践。（PG / 約7名）</p>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <div class="project-meta">
+          <div class="project-num">2024.06 — 2025.09</div>
+          <div class="project-title" id="proj4Title">マッチングアプリ新規開発</div>
+          <div class="project-tags">
+            <span class="project-tag">PHP / Laravel</span>
+            <span class="project-tag">Vue.js</span>
+            <span class="project-tag">GCP</span>
+            <span class="project-tag">Firebase</span>
+          </div>
+        </div>
+        <div class="project-body">
+          <p class="project-desc" id="proj4Desc">アーキテクチャ設計・要件定義・英語での進捗管理・フィリピンエンジニア採用・プロトタイプ開発をブリッジSEとして担当。採用〜チーム構築・設計〜改善まで一気通貫で対応。（ブリッジSE / 約8名）</p>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <div class="project-meta">
+          <div class="project-num">2024.04 — 2024.11</div>
+          <div class="project-title" id="proj5Title">仕訳管理ツール新規開発</div>
+          <div class="project-tags">
+            <span class="project-tag">Python</span>
+            <span class="project-tag">Django</span>
+            <span class="project-tag">Streamlit</span>
+            <span class="project-tag">Azure</span>
+            <span class="project-tag">MSSQL</span>
+          </div>
+        </div>
+        <div class="project-body">
+          <p class="project-desc" id="proj5Desc">新規システム開発・Azure環境構築・CI/CD構築・ユーザー対応・ドキュメント作成（要件定義〜テスト仕様書）を全工程担当。（PG / 約10名）</p>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <div class="project-meta">
+          <div class="project-num">2022.09 — 2024.03</div>
+          <div class="project-title" id="proj6Title">契約管理ツール リプレイス</div>
+          <div class="project-tags">
+            <span class="project-tag">Python</span>
+            <span class="project-tag">Django</span>
+            <span class="project-tag">GCP</span>
+            <span class="project-tag">Elasticsearch</span>
+            <span class="project-tag">MySQL</span>
+          </div>
+        </div>
+        <div class="project-body">
+          <p class="project-desc" id="proj6Desc">オンプレ→クラウド移行、Elasticsearch→MySQL・Flask→Djangoのリプレイス、DB設計〜構築・保守運用まで全工程を担当。（PL / 約6名）</p>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <div class="project-meta">
+          <div class="project-num">2021.03 — 2022.08</div>
+          <div class="project-title" id="proj7Title">サブスク管理アプリ 新規機能開発</div>
+          <div class="project-tags">
+            <span class="project-tag">Python</span>
+            <span class="project-tag">Django</span>
+            <span class="project-tag">GCP</span>
+            <span class="project-tag">MySQL</span>
+          </div>
+        </div>
+        <div class="project-body">
+          <p class="project-desc" id="proj7Desc">新規API・ファイル出力機能の設計〜テスト、スクレイピング、オフショアメンバーの連携・管理（英語）をブリッジSEとして担当。（ブリッジSE / 約10名）</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="container">
+    <div class="section-eyebrow" id="processEyebrow">Process</div>
+    <h2 class="section-title" id="processTitle">一緒に進める<br>開発の流れ</h2>
+    <p id="processLead" style="max-width:540px; color:var(--ink-2); font-size:0.93rem; line-height:1.8; margin-bottom:0;">
+      初回の無料相談から運用まで、すべてのフェーズで伴走します。
+    </p>
+    <div class="process-steps">
+      <div class="process-step" id="step1">
+        <div class="process-step-num">01</div>
+        <div class="process-step-title">ヒアリング</div>
+        <div class="process-step-desc">課題・目標・制約をヒアリング。無料30分オンライン相談。</div>
+        <div class="process-arrow">→</div>
+      </div>
+      <div class="process-step" id="step2">
+        <div class="process-step-num">02</div>
+        <div class="process-step-title">仮説設計</div>
+        <div class="process-step-desc">解くべき課題を整理し、アーキテクチャと開発計画を提案。</div>
+        <div class="process-arrow">→</div>
+      </div>
+      <div class="process-step" id="step3">
+        <div class="process-step-num">03</div>
+        <div class="process-step-title">PoC / MVP</div>
+        <div class="process-step-desc">最小構成で仮説を検証。スピードと品質を両立した開発。</div>
+        <div class="process-arrow">→</div>
+      </div>
+      <div class="process-step" id="step4">
+        <div class="process-step-num">04</div>
+        <div class="process-step-title">開発 &amp; リリース</div>
+        <div class="process-step-desc">フルスタック開発・テスト・デプロイまで一貫して担当。</div>
+        <div class="process-arrow">→</div>
+      </div>
+      <div class="process-step" id="step5">
+        <div class="process-step-num">05</div>
+        <div class="process-step-title">運用 &amp; 改善</div>
+        <div class="process-step-desc">KPI計測・フィードバック収集・継続的な機能改善をサポート。</div>
+        <div class="process-arrow">→</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="section-eyebrow" id="contactEyebrow">Contact</div>
+        <div class="contact-tagline" id="contactTagline">まず、<br>話しましょう。</div>
+        <p class="contact-lead" id="contactLead">
+          新規プロダクト開発・既存システムの改善・AI機能の導入など、
+          どんな段階でもお気軽にご相談ください。
+          初回30分の無料相談を随時受け付けています。
+        </p>
+
+      </div>
+      <div class="contact-form">
+        <form id="contactForm" onsubmit="handleSubmit(event)">
+          <div class="form-row-2">
+            <div class="form-row">
+              <label for="name" id="labelName">お名前</label>
+              <input type="text" id="name" placeholder="山田 太郎" required>
+            </div>
+            <div class="form-row">
+              <label for="company" id="labelCompany">会社名</label>
+              <input type="text" id="company" placeholder="株式会社〇〇">
+            </div>
+          </div>
+          <div class="form-row">
+            <label for="email" id="labelEmail">メールアドレス</label>
+            <input type="email" id="email" placeholder="taro@example.com" required>
+          </div>
+          <div class="form-row">
+            <label for="message" id="labelMessage">詳細・ご相談内容</label>
+            <textarea id="message" placeholder="プロジェクトの概要・課題・ご予算・スケジュール感などをお聞かせください。"></textarea>
+          </div>
+          <button type="submit" class="form-submit" id="submitBtn">無料相談を申し込む →</button>
+          <p class="form-note" id="formNote">通常1〜2営業日以内にご返信いたします。</p>
+        </form>
+        <div id="successMsg" style="display:none; text-align:center; padding:2rem 0;">
+          <div style="font-size:2rem; margin-bottom:0.75rem;">✅</div>
+          <div id="successTitle" style="font-weight:700; font-size:1.1rem; margin-bottom:0.5rem;">送信しました！</div>
+          <div id="successSub" style="font-size:0.87rem; color:var(--ink-2);">1〜2営業日以内にご連絡いたします。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#hero" class="footer-logo">Koki<span> Yamanami</span></a>
+  <p id="footerCopy">© 2025 Koki Yamanami. All rights reserved.</p>
+</footer>
+
+<script>
+
+  // ===== i18n =====
+  const i18n = {
+    ja: {
+      navLinks: ['About', '強み', '技術', '実績', '進め方', 'Contact'],
+      eyebrow: 'Full-Stack Engineer / AI Engineer',
+      jaName: '山並 康希',
+      h1: '課題を解決する<em>プロダクトを</em><em>一緒に作る。</em>',
+      heroSub: 'ヒアリングから仮説設計・PoC・MVP開発・AI機能導入・運用まで、一気通貫でサポートするフルスタックエンジニアです。海外オフショア開発（マレーシア・フィリピン・ミャンマー）の経験と5年以上の実務を活かし、事業成長に直結するプロダクトを届けます。',
+      heroBtn1: '実績を見る →',
+      heroBtn2: 'お問い合わせ',
+      statLabel1: '年のキャリア',
+      statLabel2: 'プロジェクト実績',
+      statLabel3: 'クラウドプラットフォーム',
+      aboutEyebrow: 'About',
+      aboutTitle: '経歴とバックグラウンド',
+      tl1Period: '〜2021年',
+      tl1Title: '大学 & 海外留学',
+      tl1Desc: '大学でIT・ソフトウェア開発を学習。海外留学で英語力を習得。TOEIC 860・英検準1級を取得。',
+      tl2Period: '2021年 〜 現在',
+      tl2Title: 'オフショア開発 & プログラマーとしてのキャリア',
+      tl2Desc: '新卒入社後、マレーシア・フィリピン・ミャンマーの海外エンジニアチームと日本からリモートで協働するオフショア開発に1年半従事。その後はSaaS・業務システム・AIプロダクトなど多様なドメインで開発リードを担当し、要件定義からリリース・運用改善まで一貫して手がけてきた。',
+      strengthEyebrow: 'Strength',
+      strengthTitle: '一気通貫で<br>プロダクトを支える',
+      strengthLead: '「何を作るべきか」という課題の整理から、実際にリリースして運用を回すところまで、すべてのフェーズで価値を提供できることが最大の強みです。',
+      strength1Title: '課題ヒアリング & 仮説設計',
+      strength1Desc: 'ユーザーの声を深掘りし、解くべき問題を正確に特定。仮説を設計してチームと共有します。',
+      strength2Title: 'PoC & MVP開発',
+      strength2Desc: '最小コストで仮説を検証するPoC設計と、スピーディなMVP開発でリスクを最小化。',
+      strength3Title: 'AI機能の導入',
+      strength3Desc: 'LLM・チャットボット・自動化など、最新のAI技術を既存プロダクトへ効果的に統合します。',
+      strength4Title: 'リリース後の運用改善',
+      strength4Desc: 'KPI計測・ユーザーフィードバック収集・継続的な機能改善まで、長期的な成長を支援します。',
+      techEyebrow: 'Tech Stack',
+      techTitle: '技術スタック',
+      techLabels: ['Backend', 'Frontend', 'Cloud & Infrastructure', 'AI & Tools'],
+      projectsEyebrow: 'Projects',
+      projectsTitle: 'プロジェクト実績',
+      processEyebrow: 'Process',
+      processTitle: '一緒に進める<br>開発の流れ',
+      processLead: '初回の無料相談から運用まで、すべてのフェーズで伴走します。',
+      processSteps: [
+        {num:'01', title:'ヒアリング', desc:'課題・目標・制約をヒアリング。無料30分オンライン相談。'},
+        {num:'02', title:'仮説設計', desc:'解くべき課題を整理し、アーキテクチャと開発計画を提案。'},
+        {num:'03', title:'PoC / MVP', desc:'最小構成で仮説を検証。スピードと品質を両立した開発。'},
+        {num:'04', title:'開発 & リリース', desc:'フルスタック開発・テスト・デプロイまで一貫して担当。'},
+        {num:'05', title:'運用 & 改善', desc:'KPI計測・フィードバック収集・継続的な機能改善をサポート。'},
+      ],
+      contactEyebrow: 'Contact',
+      contactTagline: 'まず、<br>話しましょう。',
+      contactLead: '新規プロダクト開発・既存システムの改善・AI機能の導入など、どんな段階でもお気軽にご相談ください。初回30分の無料相談を随時受け付けています。',
+      formName: 'お名前',
+      formNamePh: '山田 太郎',
+      formCompany: '会社名',
+      formCompanyPh: '株式会社〇〇',
+      formEmail: 'メールアドレス',
+      formEmailPh: 'taro@example.com',
+      formMessage: '詳細・ご相談内容',
+      formMessagePh: 'プロジェクトの概要・課題・ご予算・スケジュール感などをお聞かせください。',
+      formBtn: '無料相談を申し込む →',
+      formNote: '通常1〜2営業日以内にご返信いたします。',
+      successTitle: '送信しました！',
+      successSub: '1〜2営業日以内にご連絡いたします。',
+      footerCopy: '© 2025 Koki Yamanami. All rights reserved.',
+      aboutCardJaName: '山並 康希',
+      aboutCardDesc: '留学・IT学習で土台を築き、マレーシア・フィリピン・ミャンマーの海外チームとのオフショア開発を経て、プログラマーとして幅広いドメインのプロダクト開発を経験。',
+      projects: [
+        {title:'営業支援ツール開発', desc:'API設計・開発、個社カスタム開発、バッチ処理開発を担当。Claude Codeを活用したAI駆動開発・アジャイル体制で推進。（PG / 約8名）'},
+        {title:'チャットボットシステム開発', desc:'アーキテクチャ設計・RAG開発・オフショア体制構築・タスク進捗管理・レビューをブリッジSEとして担当。Azure AI Search / Blob Storage活用。（ブリッジSE / 約7名）'},
+        {title:'シェアオフィスWebサービス開発', desc:'API設計・開発、コンポーネント設計、既存システムリプレイス、バッチ処理開発を担当。デザインパターンを考慮した堅牢な設計を実践。（PG / 約7名）'},
+        {title:'マッチングアプリ新規開発', desc:'アーキテクチャ設計・要件定義・英語での進捗管理・フィリピンエンジニア採用・プロトタイプ開発をブリッジSEとして担当。採用〜チーム構築・設計〜改善まで一気通貫で対応。（ブリッジSE / 約8名）'},
+        {title:'仕訳管理ツール新規開発', desc:'新規システム開発・Azure環境構築・CI/CD構築・ユーザー対応・ドキュメント作成（要件定義〜テスト仕様書）を全工程担当。（PG / 約10名）'},
+        {title:'契約管理ツール リプレイス', desc:'オンプレ→クラウド移行、Elasticsearch→MySQL・Flask→Djangoのリプレイス、DB設計〜構築・保守運用まで全工程を担当。（PL / 約6名）'},
+        {title:'サブスク管理アプリ 新規機能開発', desc:'新規API・ファイル出力機能の設計〜テスト、スクレイピング、オフショアメンバーの連携・管理（英語）をブリッジSEとして担当。（ブリッジSE / 約10名）'},
+      ],
+    },
+    en: {
+      navLinks: ['About', 'Strengths', 'Skills', 'Projects', 'Process', 'Contact'],
+      eyebrow: 'Full-Stack Engineer / AI Engineer',
+      jaName: 'Koki Yamanami',
+      h1: 'Building products that<em>solve real</em><em>problems.</em>',
+      heroSub: 'I support the full cycle — from requirements & hypothesis design, PoC, MVP development, AI integration, to operations. Leveraging offshore development experience (Malaysia, Philippines & Myanmar) and 5+ years of hands-on work.',
+      heroBtn1: 'View Projects →',
+      heroBtn2: 'Contact',
+      statLabel1: 'Years Career',
+      statLabel2: 'Projects',
+      statLabel3: 'Cloud Platforms',
+      aboutEyebrow: 'About',
+      aboutTitle: 'Background',
+      tl1Period: '～2021',
+      tl1Title: 'University & Study Abroad',
+      tl1Desc: 'Studied IT & software development at university. Developed English proficiency abroad. Earned TOEIC 860 & Eiken Pre-1.',
+      tl2Period: '2021 ～ Present',
+      tl2Title: 'Offshore Dev & Programmer Career',
+      tl2Desc: 'After joining a company, spent 1.5 years working remotely with engineering teams in Malaysia, Philippines & Myanmar on offshore development. Since then, led development across SaaS, enterprise systems, and AI products — handling everything from requirements to release and operations.',
+      strengthEyebrow: 'Strength',
+      strengthTitle: 'End-to-end<br>product support',
+      strengthLead: 'My greatest strength is delivering value at every phase — from clarifying what to build, all the way to shipping and running it in production.',
+      strength1Title: 'Listening & Hypothesis Design',
+      strength1Desc: 'Deep-dive into user pain points to accurately define the problem, then design hypotheses to share with the team.',
+      strength2Title: 'PoC & MVP Development',
+      strength2Desc: 'Validate hypotheses at minimum cost with well-designed PoCs, and build MVPs fast without sacrificing quality.',
+      strength3Title: 'AI Integration',
+      strength3Desc: 'Effectively integrate cutting-edge AI — LLMs, chatbots, automation — into existing products.',
+      strength4Title: 'Post-launch Operations',
+      strength4Desc: 'KPI tracking, user feedback loops, and continuous feature improvement to support long-term growth.',
+      techEyebrow: 'Tech Stack',
+      techTitle: 'Tech Stack',
+      techLabels: ['Backend', 'Frontend', 'Cloud & Infrastructure', 'AI & Tools'],
+      projectsEyebrow: 'Projects',
+      projectsTitle: 'Project History',
+      processEyebrow: 'Process',
+      processTitle: 'How we<br>work together',
+      processLead: 'From the first free consultation to ongoing operations — I\'m with you every step.',
+      processSteps: [
+        {num:'01', title:'Discovery', desc:'Listen to your goals, constraints, and challenges. Free 30-min online session.'},
+        {num:'02', title:'Hypothesis', desc:'Clarify the problem to solve, propose architecture & development plan.'},
+        {num:'03', title:'PoC / MVP', desc:'Validate hypotheses with minimal scope. Fast and quality-focused.'},
+        {num:'04', title:'Build & Launch', desc:'Full-stack development, testing, and deployment — end to end.'},
+        {num:'05', title:'Ops & Growth', desc:'KPI tracking, feedback loops, and continuous improvement.'},
+      ],
+      contactEyebrow: 'Contact',
+      contactTagline: "Let's talk<br>first.",
+      contactLead: 'Whether it\'s a new product, system improvement, or AI integration — feel free to reach out at any stage. Free 30-min consultations available anytime.',
+      formName: 'Your Name',
+      formNamePh: 'John Doe',
+      formCompany: 'Company',
+      formCompanyPh: 'Acme Corp',
+      formEmail: 'Email',
+      formEmailPh: 'john@example.com',
+      formMessage: 'Details & Request',
+      formMessagePh: 'Tell us about your project — overview, challenges, budget, timeline, etc.',
+      formBtn: 'Request Free Consultation →',
+      formNote: 'We usually reply within 1–2 business days.',
+      successTitle: 'Sent!',
+      successSub: 'We\'ll get back to you within 1–2 business days.',
+      footerCopy: '© 2025 Koki Yamanami. All rights reserved.',
+      aboutCardJaName: 'Koki Yamanami',
+      aboutCardDesc: 'Built a foundation through IT studies and overseas exchange. Worked remotely with engineering teams in Malaysia, Philippines & Myanmar on offshore development, then grew as a programmer across diverse domains.',
+      projects: [
+        {title:'Sales Support Tool', desc:'API design & development, custom client builds, batch processing. Led AI-driven development with Claude Code in an agile setup. (PG / ~8 members)'},
+        {title:'Chatbot System', desc:'Architecture design, RAG development, offshore team setup, progress management, and code reviews as Bridge SE. Used Azure AI Search & Blob Storage. (Bridge SE / ~7 members)'},
+        {title:'Shared Office Web Service', desc:'API design & development, component design, legacy system rewrite, batch processing. Practiced robust design with design patterns. (PG / ~7 members)'},
+        {title:'Matching App (New Build)', desc:'Architecture design, requirements definition, English progress management, Philippines engineer hiring, prototype development as Bridge SE. End-to-end from hiring to team building. (Bridge SE / ~8 members)'},
+        {title:'Journal Entry Tool (New Build)', desc:'New system development, Azure environment setup, CI/CD pipeline, user support, full documentation (requirements → test specs). (PG / ~10 members)'},
+        {title:'Contract Management Tool Rewrite', desc:'On-premise → cloud migration, Elasticsearch → MySQL & Flask → Django rewrite, DB design → build → maintenance. Full lifecycle. (PL / ~6 members)'},
+        {title:'Subscription App — New Features', desc:'New API & file export feature design → testing, scraping, offshore member coordination & management (in English) as Bridge SE. (Bridge SE / ~10 members)'},
+      ],
+    }
+  };
+
+  let currentLang = 'ja';
+
+  function applyLang(lang) {
+    currentLang = lang;
+    const t = i18n[lang];
+    document.documentElement.lang = lang;
+
+    // Toggle button style
+    document.getElementById('langJa').style.fontWeight = lang === 'ja' ? '700' : '400';
+    document.getElementById('langEn').style.fontWeight = lang === 'en' ? '700' : '400';
+
+    // Nav links text (skip CTA)
+    const navAs = document.querySelectorAll('#navLinks li a:not(.nav-cta)');
+    navAs.forEach((a, i) => { if(t.navLinks[i]) a.textContent = t.navLinks[i]; });
+    const cta = document.querySelector('#navLinks li a.nav-cta');
+    if(cta) cta.textContent = t.navLinks[5];
+
+    // Hero
+    document.getElementById('heroEyebrow').textContent = t.eyebrow;
+    document.getElementById('heroJaName').textContent = t.jaName;
+    document.getElementById('heroH1').innerHTML = t.h1;
+    document.getElementById('heroSub').textContent = t.heroSub;
+    document.getElementById('heroBtn1').textContent = t.heroBtn1;
+    document.getElementById('heroBtn2').textContent = t.heroBtn2;
+    document.getElementById('statLabel1').textContent = t.statLabel1;
+    document.getElementById('statLabel2').textContent = t.statLabel2;
+    document.getElementById('statLabel3').textContent = t.statLabel3;
+
+    // About
+    document.getElementById('aboutEyebrow').textContent = t.aboutEyebrow;
+    document.getElementById('aboutTitle').textContent = t.aboutTitle;
+    document.getElementById('tl1Period').textContent = t.tl1Period;
+    document.getElementById('tl1Title').textContent = t.tl1Title;
+    document.getElementById('tl1Desc').textContent = t.tl1Desc;
+    document.getElementById('tl2Period').textContent = t.tl2Period;
+    document.getElementById('tl2Title').textContent = t.tl2Title;
+    document.getElementById('tl2Desc').textContent = t.tl2Desc;
+
+    // Strength
+    document.getElementById('strengthEyebrow').textContent = t.strengthEyebrow;
+    document.getElementById('strengthTitle').innerHTML = t.strengthTitle;
+    document.getElementById('strengthLead').textContent = t.strengthLead;
+    document.getElementById('strength1Title').textContent = t.strength1Title;
+    document.getElementById('strength1Desc').textContent = t.strength1Desc;
+    document.getElementById('strength2Title').textContent = t.strength2Title;
+    document.getElementById('strength2Desc').textContent = t.strength2Desc;
+    document.getElementById('strength3Title').textContent = t.strength3Title;
+    document.getElementById('strength3Desc').textContent = t.strength3Desc;
+    document.getElementById('strength4Title').textContent = t.strength4Title;
+    document.getElementById('strength4Desc').textContent = t.strength4Desc;
+
+    // Tech
+    document.getElementById('techEyebrow').textContent = t.techEyebrow;
+    document.getElementById('techTitle').textContent = t.techTitle;
+
+    // Projects
+    document.getElementById('projectsEyebrow').textContent = t.projectsEyebrow;
+    document.getElementById('projectsTitle').textContent = t.projectsTitle;
+
+    // Process
+    document.getElementById('processEyebrow').textContent = t.processEyebrow;
+    document.getElementById('processTitle').innerHTML = t.processTitle;
+    document.getElementById('processLead').textContent = t.processLead;
+    t.processSteps.forEach((s, i) => {
+      const el = document.getElementById('step' + (i+1));
+      if(el) {
+        el.querySelector('.process-step-title').textContent = s.title;
+        el.querySelector('.process-step-desc').textContent = s.desc;
+      }
+    });
+
+    // Contact
+    document.getElementById('contactEyebrow').textContent = t.contactEyebrow;
+    document.getElementById('contactTagline').innerHTML = t.contactTagline;
+    document.getElementById('contactLead').textContent = t.contactLead;
+    document.getElementById('labelName').textContent = t.formName;
+    document.getElementById('name').placeholder = t.formNamePh;
+    document.getElementById('labelCompany').textContent = t.formCompany;
+    document.getElementById('company').placeholder = t.formCompanyPh;
+    document.getElementById('labelEmail').textContent = t.formEmail;
+    document.getElementById('email').placeholder = t.formEmailPh;
+    document.getElementById('labelMessage').textContent = t.formMessage;
+    document.getElementById('message').placeholder = t.formMessagePh;
+    document.getElementById('submitBtn').textContent = t.formBtn;
+    document.getElementById('formNote').textContent = t.formNote;
+    document.getElementById('successTitle').textContent = t.successTitle;
+    document.getElementById('successSub').textContent = t.successSub;
+    document.getElementById('footerCopy').textContent = t.footerCopy;
+    document.getElementById('aboutCardJaName').textContent = t.aboutCardJaName;
+    document.getElementById('aboutCardDesc').textContent = t.aboutCardDesc;
+    t.projects.forEach((p, i) => {
+      const titleEl = document.getElementById('proj' + (i+1) + 'Title');
+      const descEl  = document.getElementById('proj' + (i+1) + 'Desc');
+      if(titleEl) titleEl.textContent = p.title;
+      if(descEl)  descEl.textContent  = p.desc;
+    });
+  }
+  // ===== end i18n =====
+
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const name    = document.getElementById('name').value;
+    const company = document.getElementById('company').value;
+    const email   = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+
+    const url = 'https://docs.google.com/forms/d/e/1FAIpQLSdXdrX5ALEISeyOmDwd-_9RbTHB-OdMugypz3zNT0JZYCF6uQ/viewform'
+      + '?entry.1222732872=' + encodeURIComponent(name)
+      + '&entry.34715847='   + encodeURIComponent(company)
+      + '&entry.1918662363=' + encodeURIComponent(email)
+      + '&entry.687074326='  + encodeURIComponent(message);
+
+    window.open(url, '_blank');
+  }
+
+  // キャリア年数を自動計算（2021年スタート）
+  const years = new Date().getFullYear() - 2021;
+  document.getElementById('careerYears').innerHTML = years + '<span>+</span>';
+
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.project-item, .strength-card, .tl-item, .process-step').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
